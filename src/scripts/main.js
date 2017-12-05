@@ -1,36 +1,20 @@
 console.log('starting main');
 
-const PointRenderer = require('./point-renderer');
-const GraphRenderer = require('./graph-renderer');
-const Animator = require('./animator');
-const Vector = require('./vector');
+const PolygonSpinner = require('./polygon-spinner');
+const CubeSpinner = require('./cube-spinner');
+
+const template = `
+<h2>rotating polygon</h2>
+<div class="polygon-spinner"></div>
+<h2>rotating cube</h2>
+<div class="cube-interaction"></div>
+`;
 
 var mainEl = document.querySelector('main');
 
-var template = `
-<canvas class="graph-renderer" width="256" height="256"></canvas>
-<canvas class="point-renderer" width="256" height="256"></canvas>
-`;
-
 mainEl.innerHTML = template;
 
-var graphCanvas = mainEl.querySelector('canvas.graph-renderer');
-var pointCanvas = mainEl.querySelector('canvas.point-renderer');
-var options = {
-    xmin: -2, xmax: 2,
-    ymin: -2, ymax: 2,
-};
-var graphRenderer = GraphRenderer(graphCanvas, options);
-var pointRenderer = PointRenderer(pointCanvas, options);
+var spinner = PolygonSpinner(mainEl.querySelector('.polygon-spinner'));
 
-var points = Vector.polygon(6, 1);
+var cube = CubeSpinner(mainEl.querySelector('.cube-interaction'));
 
-var animator = Animator(() => {
-    for (let i in points) {
-        points[i] = Vector.rotate(points[i], 0, 1, 0.03);
-    }
-    graphRenderer.render(points);
-    pointRenderer.render(points);
-});
-
-animator.start();

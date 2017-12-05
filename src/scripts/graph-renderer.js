@@ -7,11 +7,16 @@ function GraphRenderer(canvas, options) {
         ymin: options.ymin, ymax: options.ymax,
     });
     return {
-        render(vectors) {
+        render(vectors, colors) {
+            if (!colors) {
+                colors = ['black'];
+            }
             var monomials = vectors.map(vector => Monomial.create(vector));
             grapher.clear();
-            for (let monomial of monomials) {
-                grapher.graph('black', monomial);
+            for (let i in monomials) {
+                let monomial = monomials[i];
+                let color = colors[i % colors.length];
+                grapher.graph(color, monomial);
             }
         },
         done() {

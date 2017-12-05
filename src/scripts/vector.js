@@ -30,6 +30,18 @@ const Vector = {
         }
         return points;
     },
+    cube(r) {
+        r *= Math.sqrt(3);
+        var points = [];
+        for (let x of [-r, r]) {
+            for (let y of [-r, r]) {
+                for (let z of [-r, r]) {
+                    points.push([x, y, z]);
+                }
+            }
+        }
+        return points;
+    },
 };
 
 module.exports = Vector;
