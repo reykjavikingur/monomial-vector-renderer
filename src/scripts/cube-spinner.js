@@ -5,15 +5,13 @@ const Button = require('./button');
 
 const template = `
 <canvas width="256" height="256"></canvas>
-<div>
-Rotate:
-<button class="rot-xy">x-y</button>
-<button class="rot-yz">y-z</button>
-<button class="rot-xz">x-z</button>
-</div>
 `;
 
-function CubeSpinner(node) {
+function CubeSpinner(node, options) {
+
+    if (!options) {
+        options = {};
+    }
 
     var points = Vector.cube(0.5);
 
@@ -22,7 +20,7 @@ function CubeSpinner(node) {
     var canvas = node.querySelector('canvas');
 
     // indices of axes to rotate
-    var rotation = [0, 1];
+    var rotation = options.rotation || [0, 1];
 
     var core = {
 
@@ -34,16 +32,6 @@ function CubeSpinner(node) {
         animator: Animator(() => {
             points = points.map(point => Vector.rotate(point, rotation[0], rotation[1], 0.03));
             core.graphRenderer.render(points, ['red', 'green', 'blue', 'black']);
-        }),
-
-        xyRotateButton: Button(node.querySelector('.rot-xy'), event => {
-            rotation = [0, 1];
-        }),
-        yzRotateButton: Button(node.querySelector('.rot-yz'), event => {
-            rotation = [1, 2];
-        }),
-        xzRotateButton: Button(node.querySelector('.rot-xz'), event => {
-            rotation = [0, 2];
         }),
 
     };
