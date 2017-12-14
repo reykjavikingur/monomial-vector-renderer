@@ -1,3 +1,4 @@
+const Button = require('./button');
 const PointRenderer = require('./point-renderer');
 const GraphRenderer = require('./graph-renderer');
 const Animator = require('./animator');
@@ -6,6 +7,8 @@ const Vector = require('./vector');
 const template = `
 <canvas class="graph-renderer" width="256" height="256"></canvas>
 <canvas class="point-renderer" width="256" height="256"></canvas>
+<button class="play-button">play</button>
+<button class="stop-button">stop</button>
 `;
 
 function PolygonSpinner(node, options) {
@@ -26,20 +29,28 @@ function PolygonSpinner(node, options) {
     var points = Vector.polygon(6, 1);
 
     var animator = Animator(() => {
+        graphRenderer.render(points);
+        pointRenderer.render(points);
         for (let i in points) {
             points[i] = Vector.rotate(points[i], 0, 1, 0.03);
         }
-        graphRenderer.render(points);
-        pointRenderer.render(points);
     });
 
-    animator.start();
+    var playButton = Button(mainEl.querySelector('.play-button'), event => {
+        animator.start();
+    });
+    var stopButton = Button(mainEl.querySelector('.stop-button'), event => {
+        animator.stop();
+    });
+
+    animator.step();
 
     return {
         done() {
             animator.done();
             graphRenderer.done();
             pointRenderer.done();
+            playButton.done();
         },
     };
 
