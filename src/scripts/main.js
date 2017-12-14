@@ -4,7 +4,7 @@ const PolygonSpinner = require('./polygon-spinner');
 const Spinner3d = require('./spinner3d');
 
 const template = `
-<h2>rotating polygon</h2>
+<h2>rotating hexagon</h2>
 <div class="polygon-spinner"></div>
 <h2>rotating cube</h2>
 <p>representation of a cube shown rotating around each of x, y, z axes</p>

@@ -8,16 +8,21 @@ function PointRenderer(canvas, options) {
     });
     clear();
     return {
-        render(points) {
+        render(points, colors) {
+            if (!colors) {
+                colors = ['black'];
+            }
             clear();
-            for (let point of points) {
+            for (let i in points) {
+                let color = colors[i % colors.length];
+                let point = points[i];
                 var x = point[0];
                 var y = point[1];
                 var canvasPoint = interval.getPixelPosition(context, x, y);
                 var cx = canvasPoint[0];
                 var cy = canvasPoint[1];
                 context.save();
-                context.strokeStyle = 'black';
+                context.strokeStyle = color;
                 context.strokeRect(cx, cy, 1, 1);
                 context.restore();
             }

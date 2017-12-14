@@ -1,13 +1,15 @@
 const Vector = require('./vector');
 const Animator = require('./animator');
 const GraphRenderer = require('./graph-renderer');
+const PointRenderer = require('./point-renderer');
 const MultiButton = require('./multi-button');
 const MultiPresser = require('./multi-presser');
 
 const ROTATION_SPEED = 0.01;
 
 const template = `
-<canvas width="256" height="256"></canvas>
+<canvas width="256" height="256" class="graph-renderer"></canvas>
+<canvas width="256" height="256" class="point-renderer"></canvas>
 <input type="button" value="x" class="axis"/>
 <input type="button" value="y" class="axis"/>
 <input type="button" value="z" class="axis"/>
@@ -27,14 +29,18 @@ function Spinner3d(node) {
 
     node.innerHTML = template;
 
-    var graphRenderer = GraphRenderer(node.querySelector('canvas'), {
+    var rendererOptions = {
         xmin: -2, xmax: 2,
         ymin: -2, ymax: 2,
-    });
+    };
+    var graphRenderer = GraphRenderer(node.querySelector('canvas.graph-renderer'), rendererOptions);
+    var pointRenderer = PointRenderer(node.querySelector('canvas.point-renderer'), rendererOptions);
 
     var animator = Animator(() => {
+        var colors = ['red', 'green', 'blue', 'black'];
         points = points.map(point => Vector.rotate(point, rotation[0], rotation[1], rotationSpeed));
-        graphRenderer.render(points, ['red', 'green', 'blue', 'black']);
+        graphRenderer.render(points, colors);
+        pointRenderer.render(points, colors);
     });
 
     var axisMultiButton = MultiButton(node.querySelectorAll('input[type="button"].axis'), value => {
@@ -79,6 +85,7 @@ function Spinner3d(node) {
     return {
         done(){
             graphRenderer.done();
+            pointRenderer.done();
             animator.done();
             axisMultiButton.done();
             speedMultiButton.done();
