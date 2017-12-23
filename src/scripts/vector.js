@@ -42,6 +42,25 @@ const Vector = {
         }
         return points;
     },
+    hypercube(n, r) {
+        if (n == 1) {
+            // base case
+            return [[-r], [r]];
+        }
+        else {
+            var subpoints = this.hypercube(n - 1, r);
+            var points = [];
+            for (let subpoint of subpoints) {
+                var s1 = subpoint.slice();
+                var s2 = subpoint.slice();
+                s1.push(-r);
+                s2.push(r);
+                points.push(s1);
+                points.push(s2);
+            }
+            return points;
+        }
+    },
 };
 
 module.exports = Vector;
