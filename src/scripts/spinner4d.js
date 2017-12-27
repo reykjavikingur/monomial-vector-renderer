@@ -44,10 +44,9 @@ function Spinner4d(node, options) {
     var pointRenderer = PointRenderer(node.querySelector('canvas.point-renderer'), rendererOptions);
 
     var animator = Animator(() => {
-        var colors = ['black', 'red', 'green', 'blue', 'orange'];
         points = points.map(point => Vector.rotate(point, rotation[0], rotation[1], rotationSpeed));
-        graphRenderer.render(points, colors);
-        pointRenderer.render(points, colors);
+        graphRenderer.render(points);
+        pointRenderer.render(points);
     });
 
     var axisMultiButton = MultiButton(node.querySelectorAll('input[type="button"].axis'), value => {

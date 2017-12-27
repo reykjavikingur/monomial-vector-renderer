@@ -61,6 +61,37 @@ const Vector = {
             return points;
         }
     },
+    colorizer(source) {
+        if (!source) {
+            return (vector, index) => {
+                var z = vector[2] || 0;
+                var w = vector[3] || 0;
+                var angle = Math.atan2(w, z);
+                if (angle < 0) {
+                    angle += 2 * Math.PI;
+                }
+                var max = 2;
+                var magFactor = max * Math.sqrt(vector.length);
+
+                var mag = Math.sqrt(z * z + w * w);
+                var hue = Math.round(angle * 180 / Math.PI);
+                var sat = 100 + '%';
+                var lum = Math.round(mag * 100 / magFactor) + '%';
+                return `hsl(${hue}, ${sat}, ${lum})`;
+            };
+        }
+        else if (Array.isArray(source)) {
+            return (vector, index) => {
+                return source[index % source.length];
+            };
+        }
+        else if (typeof source === 'function') {
+            return source;
+        }
+        else {
+            throw new Error('invalid colorizer source');
+        }
+    },
 };
 
 module.exports = Vector;

@@ -41,9 +41,8 @@ function Translator(node) {
         if (selectedAxis >= 0 && selectedAxis < point.length) {
             point[selectedAxis] += selectedSpeed;
         }
-        var colors = ['black'];
-        graphRenderer.render([point], colors);
-        pointRenderer.render([point], colors);
+        graphRenderer.render([point]);
+        pointRenderer.render([point]);
     });
 
     var axisMultiButton = MultiButton(node.querySelectorAll('.axis'), value => {

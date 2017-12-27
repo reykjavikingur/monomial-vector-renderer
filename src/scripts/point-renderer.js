@@ -1,3 +1,4 @@
+const Vector = require('./vector');
 const Interval = require('./interval');
 
 function PointRenderer(canvas, options) {
@@ -9,12 +10,14 @@ function PointRenderer(canvas, options) {
     clear();
     return {
         render(points, colors) {
+            var colorize = Vector.colorizer(colors);
             if (!colors) {
                 colors = ['black'];
             }
             clear();
             for (let i in points) {
-                let color = colors[i % colors.length];
+                let color = colorize(points[i], i);
+                colors[i % colors.length];
                 let point = points[i];
                 var x = point[0];
                 var y = point[1];
@@ -23,7 +26,7 @@ function PointRenderer(canvas, options) {
                 var cy = canvasPoint[1];
                 context.save();
                 context.strokeStyle = color;
-                context.strokeRect(cx, cy, 1, 1);
+                context.strokeRect(cx, cy, 2, 2);
                 context.restore();
             }
         },
