@@ -1,11 +1,15 @@
 console.log('starting main');
 
 const Vector = require('./vector');
+const Translator = require('./translator');
 const PolygonSpinner = require('./polygon-spinner');
 const Spinner3d = require('./spinner3d');
 const Spinner4d = require('./spinner4d');
 
 const template = `
+<h2>point representations</h2>
+<div class="point"></div>
+
 <h2>rotating hexagon</h2>
 <div class="polygon-spinner"></div>
 
@@ -21,6 +25,8 @@ const template = `
 var mainEl = document.querySelector('main');
 
 mainEl.innerHTML = template;
+
+var translator = Translator(mainEl.querySelector('.point'));
 
 var spinningPolygon = PolygonSpinner(mainEl.querySelector('.polygon-spinner'));
 
