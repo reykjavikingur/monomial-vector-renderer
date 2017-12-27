@@ -1,5 +1,6 @@
 console.log('starting main');
 
+const Vector = require('./vector');
 const PolygonSpinner = require('./polygon-spinner');
 const Spinner3d = require('./spinner3d');
 const Spinner4d = require('./spinner4d');
@@ -23,6 +24,10 @@ mainEl.innerHTML = template;
 
 var spinningPolygon = PolygonSpinner(mainEl.querySelector('.polygon-spinner'));
 
-var spinner3d = Spinner3d(mainEl.querySelector('.cube-spinner'));
+var spinner3d = Spinner3d(mainEl.querySelector('.cube-spinner'), {
+    points: Vector.hypercube(3, 1),
+});
 
-var spinner4d = Spinner4d(mainEl.querySelector('.hypercube-spinner'));
+var spinner4d = Spinner4d(mainEl.querySelector('.hypercube-spinner'), {
+    points: Vector.hypercube(4, 1),
+});

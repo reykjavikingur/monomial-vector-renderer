@@ -20,10 +20,14 @@ const template = `
 <input type="button" value="+" class="speed"/>
 `;
 
-function Spinner4d(node) {
+function Spinner4d(node, options) {
+
+    if (!options) {
+        options = {};
+    }
 
     // vectors to render
-    var points = Vector.hypercube(4, 1);
+    var points = options.points || [];
 
     // indices of axes to rotate
     var rotation;
