@@ -10,9 +10,9 @@ const ROTATION_SPEED = 0.01;
 const template = `
 <canvas width="256" height="256" class="graph-renderer"></canvas>
 <canvas width="256" height="256" class="point-renderer"></canvas>
-<input type="button" value="x" class="axis"/>
-<input type="button" value="y" class="axis"/>
-<input type="button" value="z" class="axis"/>
+<input type="button" value="x-y" class="axis"/>
+<input type="button" value="y-z" class="axis"/>
+<input type="button" value="x-z" class="axis"/>
 <input type="button" value="-" class="speed"/>
 <input type="button" value="+" class="speed"/>
 `;
@@ -44,21 +44,13 @@ function Spinner3d(node) {
     });
 
     var axisMultiButton = MultiButton(node.querySelectorAll('input[type="button"].axis'), value => {
-        switch(value) {
-            case 'x':
-                rotation = [1, 2];
-                break;
-            case 'y':
-                rotation = [0, 2];
-                break;
-            case 'z':
-                rotation = [0, 1];
-                break;
-            default:
-                break;
-        }
+        var parts = String(value).split('-');
+        var axes = ['x', 'y', 'z'];
+        var axis1 = axes.indexOf(parts[0]);
+        var axis2 = axes.indexOf(parts[1]);
+        rotation = [axis1, axis2];
     });
-    axisMultiButton.value = 'x';
+    axisMultiButton.value = 'x-y'; // initialize to default axis
 
     var speedMultiButton = MultiPresser(node.querySelectorAll('input[type="button"].speed'), target => {
         if (target) {
