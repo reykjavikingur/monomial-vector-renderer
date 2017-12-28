@@ -19,6 +19,18 @@ function GraphRenderer(canvas, options) {
                 grapher.graph(color, monomial);
             }
         },
+        get xmin() {
+            return options.xmin;
+        },
+        get ymin() {
+            return options.ymin;
+        },
+        get xmax() {
+            return options.xmax;
+        },
+        get ymax() {
+            return options.ymax;
+        },
         done() {
             grapher.done();
         },
