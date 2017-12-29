@@ -43,7 +43,13 @@ function Spinner3d(node, options) {
     var animator = Animator(() => {
         points = points.map(point => Vector.rotate(point, rotation[0], rotation[1], rotationSpeed));
         graphRenderer.render(points);
-        pointRenderer.render(points);
+        pointRenderer.render(points, (point, index) => {
+            // z => c : 2 => 255, -2 => 0
+            var z = point[2];
+            var c = 63 * z + 127;
+            c = Math.max(0, Math.min(255, Math.round(c)));
+            return `rgb(${c}, ${c}, ${c})`;
+        });
     });
 
     var axisMultiButton = MultiButton(node.querySelectorAll('input[type="button"].axis'), value => {

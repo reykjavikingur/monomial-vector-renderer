@@ -33,7 +33,7 @@ function PolygonSpinner(node, options) {
     var rotationSpeed = 0;
 
     var animator = Animator(() => {
-        var colors = ['red', 'green', 'blue'];
+        var colors = ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta'];
         graphRenderer.render(points, colors);
         pointRenderer.render(points, colors);
         for (let i in points) {

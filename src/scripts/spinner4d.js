@@ -28,6 +28,11 @@ function Spinner4d(node, options) {
 
     // vectors to render
     var points = options.points || [];
+    for (let i in points) {
+        while (points[i].length < 4) {
+            points[i].push(0);
+        }
+    }
 
     // indices of axes to rotate
     var rotation;
@@ -46,7 +51,15 @@ function Spinner4d(node, options) {
     var animator = Animator(() => {
         points = points.map(point => Vector.rotate(point, rotation[0], rotation[1], rotationSpeed));
         graphRenderer.render(points);
-        pointRenderer.render(points);
+        pointRenderer.render(points, (point, index) => {
+            var z = point[2];
+            var w = point[3];
+            var lum = 0.25 * z + 0.5;
+            var sat = 0.25 * w + 0.5;
+            lum = Math.max(0, Math.min(100, Math.round(lum * 100)));
+            sat = Math.max(0, Math.min(100, Math.round(sat * 100)));
+            return `hsl(0, ${sat}%, ${lum}%)`;
+        });
     });
 
     var axisMultiButton = MultiButton(node.querySelectorAll('input[type="button"].axis'), value => {
