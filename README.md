@@ -6,6 +6,10 @@
 * `npm install`
 * `npm start`
 
+## Demo
+
+https://reykjavikingur.github.io/monomial-vector-renderer/
+
 
 ## TODO
 
